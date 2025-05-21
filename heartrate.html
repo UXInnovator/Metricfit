@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/Shield Dumbbell Logo.jpeg">
+        <link rel="stylesheet" href="styles.css">
+               <link rel="stylesheet" href="queries.css">
+    <title>Heart Rate Calculator</title>
+    <style>
+
+    </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="logo-name">
+      <img src="assets/Shield Dumbbell Logo.jpeg" alt="metric fit logo" height="40px" width="40px" >
+      <h1 class="name">MetricFit</h1>
+    </a>  
+</nav>
+  <header class="banner">
+    <h1>Heart Rate Calculator</h1>
+  </header>
+    <div class="container">
+        <h2>Heart Rate Calculator</h2>
+        <label for="age">Age:</label>
+        <input type="number" id="age" placeholder="Enter your age">
+        <br>
+        <br>
+        <button onclick="calculateHeartRate()">Calculate</button>
+        <div id="result"></div>
+    </div>
+    <br>
+    <br>
+    <section class="features">
+      <div class="heading">
+        <h1>More</h1>
+      </div>
+      <br>
+      <div class="calculators more">
+        <a href="bmi.html">
+          <div class="card">
+            <img src="assets/cards.jpg" width="100%" height="80%">
+            <h1>BMI</h1>
+          </div>
+        </a> 
+        <a href="bmr.html">
+          <div class="card">
+            <div class="card-image">
+              <img src="assets/cards.jpg" width="100%" height="100%">
+            </div>
+            <h1>BMR</h1>
+          </div>
+        </a>
+        <a href="bodyfat.html">
+          <div class="card">
+            <img src="assets/cards.jpg" width="100%" height="80%">
+            <h1>Body Fat %</h1>
+          </div>
+        </a>
+        <a href="tdee.html">
+          <div class="card">
+            <img src="assets/cards.jpg" width="100%" height="80%">
+            <h1>TDEE</h1>
+          </div>
+        </a>
+        <a href="idealweight.html">
+          <div class="card">
+            <img src="assets/cards.jpg" width="100%" height="80%">
+            <h1>Ideal Weight</h1>
+          </div>
+        </a>
+        <a href="waterintake.html">
+          <div class="card">
+            <img src="assets/cards.jpg" width="100%" height="80%">
+            <h1>Water Intake</h1>
+          </div>
+        </a>
+        <a href="calorie.html">
+          <div class="card">
+            <img src="assets/cards.jpg" width="100%" height="80%">
+            <h1>Calorie</h1>
+          </div>
+        </a>
+      </div>
+    </section>
+  <footer>
+    <h1>MetricFit</h1>
+    <div>
+      <h2>Dis <footer>
+        <h1>MetricFit</h1>
+        <div>
+        <h2>Disclaimer: </h2>
+        <p>Results are estimates and should not replace professional medical advice.</p>
+      
+        </div>
+        <div>
+          <h2>Contact Us</h2>
+          <p>
+            <b>E-mail : </b><a href="mailto:hkharshit260503@gmail.com">hkharshit260503@gmail.com</a>
+          </p>
+          <p>
+            <b>Mob. No. : </b><a href="tel:+91 9012552147">+91 9012552147</a>
+          </p>
+        </div>
+        <p>Developed by: Harshit Kumar</p>
+      </footer>claimer: </h2>
+      <p>
+        Results are estimates and should not replace professional medical advice.
+      </p>
+      <div>
+      </div>
+      <h2>Contact Us</h2>
+      <p>
+        <b>E-mail : </b><a href="mailto:hkharshit260503@gmail.com"></a>hkharshit260503@gmail.com
+      </p>
+      <p>
+        <b>Mob. No. : </b><a href="tel:+91 9012552147"></a>+91 9012552147
+      </p>
+    </div>
+    <p>
+      Developed by: Harshit Kumar
+    </p>
+  </footer>
+  
+    <script>
+        function calculateHeartRate() {
+            const ageInput = document.getElementById('age');
+            const resultDiv = document.getElementById('result');
+            const age = parseInt(ageInput.value);
+
+            if (isNaN(age) || age <= 0) {
+                resultDiv.textContent = "Please enter a valid age.";
+                return;
+            }
+
+            const maxHeartRate = 220 - age;
+            const restingHeartRate = 70; // Average resting heart rate. Can be made as an input also.
+            const heartRateReserve = maxHeartRate - restingHeartRate;
+
+            const lowIntensity = Math.round(heartRateReserve * 0.5 + restingHeartRate);
+            const moderateIntensity = Math.round(heartRateReserve * 0.7 + restingHeartRate);
+            const highIntensity = Math.round(heartRateReserve * 0.85 + restingHeartRate);
+
+            resultDiv.innerHTML = `
+                Max Heart Rate: ${maxHeartRate} bpm<br>
+                Low Intensity (50%): ${lowIntensity} bpm<br>
+                Moderate Intensity (70%): ${moderateIntensity} bpm<br>
+                High Intensity (85%): ${highIntensity} bpm
+            `;
+        }
+    </script>
+</body>
+</html>

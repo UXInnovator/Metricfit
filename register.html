@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-size: 0.9em;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: calc(100% - 12px);
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+
+        .gender-group label {
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form id="registrationForm" action="https://sheetdb.io/api/v1/2qn9jv0fld04l"
+  method="POST">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <div class="error-message" id="nameError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="text" id="age" name="age" required>
+                <div class="error-message" id="ageError"></div>
+            </div>
+
+            <div class="form-group gender-group">
+                <label>Gender:</label>
+                <label for="male"><input type="radio" id="male" name="gender" value="male" required> Male</label>
+                <label for="female"><input type="radio" id="female" name="gender" value="female"> Female</label>
+                <label for="other"><input type="radio" id="other" name="gender" value="other"> Other</label>
+                <div class="error-message" id="genderError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="height">Height (in cm):</label>
+                <input type="text" id="height" name="height">
+                <div class="error-message" id="heightError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <div class="error-message" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Create Password:</label>
+                <input type="password" id="password" name="password" required>
+                <div class="error-message" id="passwordError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <div class="error-message" id="confirmPasswordError"></div>
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registrationForm');
+            const nameInput = document.getElementById('name');
+            const ageInput = document.getElementById('age');
+            const heightInput = document.getElementById('height');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const nameError = document.getElementById('nameError');
+            const ageError = document.getElementById('ageError');
+            const genderError = document.getElementById('genderError');
+            const heightError = document.getElementById('heightError');
+            const emailError = document.getElementById('emailError');
+            const passwordError = document.getElementById('passwordError');
+            const confirmPasswordError = document.getElementById('confirmPasswordError');
+
+            form.addEventListener('submit', function(event) {
+                let isValid = true;
+
+                // Reset error messages
+                nameError.textContent = '';
+                ageError.textContent = '';
+                genderError.textContent = '';
+                heightError.textContent = '';
+                emailError.textContent = '';
+                passwordError.textContent = '';
+                confirmPasswordError.textContent = '';
+
+                // Validate Name
+                if (nameInput.value.trim() === '') {
+                    nameError.textContent = 'Name is required.';
+                    isValid = false;
+                }
+
+                // Validate Age
+                if (ageInput.value.trim() === '') {
+                    ageError.textContent = 'Age is required.';
+                    isValid = false;
+                } else if (isNaN(ageInput.value) || parseInt(ageInput.value) <= 0) {
+                    ageError.textContent = 'Age must be a positive number.';
+                    isValid = false;
+                }
+
+                // Validate Gender
+                const genderRadios = document.querySelectorAll('input[name="gender"]');
+                let genderSelected = false;
+                genderRadios.forEach(radio => {
+                    if (radio.checked) {
+                        genderSelected = true;
+                    }
+                });
+                if (!genderSelected) {
+                    genderError.textContent = 'Please select a gender.';
+                    isValid = false;
+                }
+
+                // Validate Height (optional, but can add checks if needed)
+                if (heightInput.value.trim() !== '' && (isNaN(heightInput.value) || parseFloat(heightInput.value) <= 0)) {
+                    heightError.textContent = 'Height must be a positive number.';
+                    isValid = false;
+                }
+
+                // Validate Email
+                if (emailInput.value.trim() === '') {
+                    emailError.textContent = 'Email is required.';
+                    isValid = false;
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+                    emailError.textContent = 'Invalid email format.';
+                    isValid = false;
+                }
+
+                // Validate Password
+                if (passwordInput.value.trim() === '') {
+                    passwordError.textContent = 'Password is required.';
+                    isValid = false;
+                } else if (passwordInput.value.length < 6) {
+                    passwordError.textContent = 'Password must be at least 6 characters long.';
+                    isValid = false;
+                }
+
+                // Validate Confirm Password
+                if (confirmPasswordInput.value.trim() === '') {
+                    confirmPasswordError.textContent = 'Confirm password is required.';
+                    isValid = false;
+                } else if (confirmPasswordInput.value !== passwordInput.value) {
+                    confirmPasswordError.textContent = 'Passwords do not match.';
+                    isValid = false;
+                }
+
+                if (!isValid) {
+                    event.preventDefault(); // Prevent form submission if there are errors
+                } else {
+                    // In a real application, you would send this data to a server
+                    console.log('Registration Successful!');
+                    console.log('Name:', nameInput.value);
+                    console.log('Age:', ageInput.value);
+                    const selectedGender = document.querySelector('input[name="gender"]:checked');
+                    console.log('Gender:', selectedGender ? selectedGender.value : '');
+                    console.log('Height:', heightInput.value);
+                    console.log('Email:', emailInput.value);
+                    console.log('Password:', passwordInput.value);
+                    // Optionally, you can redirect the user to a success page
+                    // window.location.href = 'registration_success.html';
+                }
+            });
+        });
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxkgWotCMyvIKoT9aGtPCndZdHtHrq8i972t9CKAVjO6xC7T0I/exec'
+            const form = document.forms['google-sheet']
+          
+            form.addEventListener('submit', e => {
+              e.preventDefault()
+              fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => alert("Thanks for Contacting us..! We Will Contact You Soon..."))
+                .catch(error => console.error('Error!', error.message))
+            })
+    </script>
+</body>
+</html>

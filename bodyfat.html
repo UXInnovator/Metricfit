@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/Shield Dumbbell Logo.jpeg">
+    <link rel="stylesheet" href="styles.css">
+           <link rel="stylesheet" href="queries.css">
+    <title>Body Fat Calculator</title>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="logo-name">
+      <img src="assets/Shield Dumbbell Logo.jpeg" alt="metric fit logo" height="40px" width="40px" >
+      <h1 class="name">MetricFit</h1>
+    </a>  
+</nav>
+  <header class="banner">
+    <h1>Body Fat Percentage Calculator</h1>
+  </header>
+    <div class="container">
+        <h2>Body Fat Percentage Calculator</h2>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" onchange="toggleHipInput()">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+
+        <label for="weight">Weight (kg):</label>
+        <input type="number" id="weight">
+
+        <label for="height">Height (cm):</label>
+        <input type="number" id="height">
+
+        <label for="waist">Waist (cm):</label>
+        <input type="number" id="waist">
+
+        <label for="neck">Neck (cm):</label>
+        <input type="number" id="neck">
+
+        <label for="hip" id="hipLabel">Hip (cm) (Female only):</label>
+        <input type="number" id="hip" style="display: none;">
+<br>
+<br>
+        <button onclick="calculateBodyFat()">Calculate</button>
+
+        <div id="result"></div>
+    </div>
+    <br>
+    <br>
+    <section class="features">
+      <div class="heading">
+        <h1>More</h1>
+      </div>
+      <br>
+      <div class="calculators more">
+        <a href="bmi.html">
+          <div class="card">
+            <img src="assets/cards.jpg" width="100%" height="80%">
+            <h1>BMI</h1>
+          </div>
+        </a> 
+        <a href="bmr.html">
+          <div class="card">
+            <div class="card-image">
+              <img src="assets/cards.jpg" width="100%" height="100%">
+            </div>
+            <h1>BMR</h1>
+          </div>
+        </a>
+        <a href="tdee.html">
+          <div class="card">
+            <img src="assets/cards.jpg" width="100%" height="80%">
+            <h1>TDEE</h1>
+          </div>
+        </a>
+        <a href="heartrate.html">
+          <div class="card">
+            <img src="assets/cards.jpg" width="100%" height="80%">
+            <h1>Heart Rate</h1>
+          </div>
+        </a>
+        <a href="idealweight.html">
+          <div class="card">
+            <img src="assets/cards.jpg" width="100%" height="80%">
+            <h1>Ideal Weight</h1>
+          </div>
+        </a>
+        <a href="waterintake.html">
+          <div class="card">
+            <img src="assets/cards.jpg" width="100%" height="80%">
+            <h1>Water Intake</h1>
+          </div>
+        </a>
+        <a href="calorie.html">
+          <div class="card">
+            <img src="assets/cards.jpg" width="100%" height="80%">
+            <h1>Calorie</h1>
+          </div>
+        </a>
+      </div>
+    </section>
+    <footer>
+      <h1>MetricFit</h1>
+      <div>
+      <h2>Disclaimer: </h2>
+      <p>Results are estimates and should not replace professional medical advice.</p>
+    
+      </div>
+      <div>
+        <h2>Contact Us</h2>
+        <p>
+          <b>E-mail : </b><a href="mailto:hkharshit260503@gmail.com">hkharshit260503@gmail.com</a>
+        </p>
+        <p>
+          <b>Mob. No. : </b><a href="tel:+91 9012552147">+91 9012552147</a>
+        </p>
+      </div>
+      <p>Developed by: Harshit Kumar</p>
+    </footer>
+    <script>
+        function toggleHipInput() {
+            const gender = document.getElementById("gender").value;
+            const hipLabel = document.getElementById("hipLabel");
+            const hipInput = document.getElementById("hip");
+            if (gender === "female") {
+                hipLabel.style.display = "block";
+                hipInput.style.display = "block";
+            } else {
+                hipLabel.style.display = "none";
+                hipInput.style.display = "none";
+            }
+        }
+
+        function calculateBodyFat() {
+            const gender = document.getElementById("gender").value;
+            const weight = parseFloat(document.getElementById("weight").value);
+            const heightCm = parseFloat(document.getElementById("height").value);
+            const waistCm = parseFloat(document.getElementById("waist").value);
+            const neckCm = parseFloat(document.getElementById("neck").value);
+            const hipCm = parseFloat(document.getElementById("hip").value);
+            const resultDiv = document.getElementById("result");
+
+            if (isNaN(weight) || isNaN(heightCm) || isNaN(waistCm) || isNaN(neckCm) || (gender === "female" && isNaN(hipCm))) {
+                resultDiv.textContent = "Please enter valid numbers.";
+                return;
+            }
+
+            // Convert cm to inches
+            const waistInches = waistCm * 0.393701;
+            const neckInches = neckCm * 0.393701;
+            const hipInches = hipCm * 0.393701;
+            const heightInches = heightCm * 0.393701;
+
+            let bodyFatPercentage;
+
+            if (gender === "male") {
+                bodyFatPercentage = 495 / (1.0324 - 0.19077 * Math.log10(waistInches - neckInches) + 0.15456 * Math.log10(heightInches)) - 450;
+            } else {
+                bodyFatPercentage = 495 / (1.29579 - 0.35004 * Math.log10(waistInches + hipInches - neckInches) + 0.22100 * Math.log10(heightInches)) - 450;
+            }
+
+            if (!isNaN(bodyFatPercentage)) {
+                resultDiv.textContent = `Body Fat Percentage: ${bodyFatPercentage.toFixed(2)}%`;
+            } else {
+                resultDiv.textContent = "Could not calculate body fat. Please check your inputs.";
+            }
+        }
+
+        // Call toggleHipInput on page load to set initial visibility
+        toggleHipInput();
+    </script>
+</body>
+</html>

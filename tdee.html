@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/Shield Dumbbell Logo.jpeg">
+        <link rel="stylesheet" href="styles.css">
+               <link rel="stylesheet" href="queries.css">
+    <title>TDEE Calculator</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <nav>
+    <a href="index.html" class="logo-name">
+      <img src="assets/Shield Dumbbell Logo.jpeg" alt="metric fit logo" height="40px" width="40px" >
+      <h1 class="name">MetricFit</h1>
+    </a>  
+</nav>
+  <header class="banner">
+    <h1>TDEE <br> CALCULATER</h1>
+  </header>
+    <div class="container">
+        <h2>Total Daily Energy Expenditure Calculator</h2>
+        <div class="input-group">
+            <label for="age">Age (years):</label>
+            <input type="number" id="age" min="1" required>
+        </div>
+        <div class="input-group">
+            <label for="gender">Gender:</label>
+            <select id="gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight" min="1" required>
+        </div>
+        <div class="input-group">
+            <label for="height">Height (cm):</label>
+            <input type="number" id="height" min="1" required>
+        </div>
+        <div class="input-group">
+            <label for="activity">Activity Level:</label>
+            <select id="activity" required>
+                <option value="1.2">Sedentary (little or no exercise)</option>
+                <option value="1.375">Lightly active (light exercise/sports 1-3 days/week)</option>
+                <option value="1.55">Moderately active (moderate exercise/sports 3-5 days/week)</option>
+                <option value="1.725">Very active (hard exercise/sports 6-7 days a week)</option>
+                <option value="1.9">Extra active (very hard exercise/sports & physical job or 2x training)</option>
+            </select>
+        </div>
+        <br>
+        <button onclick="calculateTDEE()">Calculate TDEE</button>
+        <div id="result"></div>
+    </div>
+    <br>
+    <br>
+    <section class="features">
+        <div class="heading">
+          <h1>More</h1>
+        </div>
+        <br>
+        <div class="calculators more">
+          <a href="bmi.html">
+            <div class="card">
+              <img src="assets/cards.jpg" width="100%" height="80%">
+              <h1>BMI</h1>
+            </div>
+          </a> 
+          <a href="bmr.html">
+            <div class="card">
+              <div class="card-image">
+                <img src="assets/cards.jpg" width="100%" height="100%">
+              </div>
+              <h1>BMR</h1>
+            </div>
+          </a>
+          <a href="bodyfat.html">
+            <div class="card">
+              <img src="assets/cards.jpg" width="100%" height="80%">
+              <h1>Body Fat %</h1>
+            </div>
+          </a>
+          <a href="heartrate.html">
+            <div class="card">
+              <img src="assets/cards.jpg" width="100%" height="80%">
+              <h1>Heart Rate</h1>
+            </div>
+          </a>
+          <a href="idealweight.html">
+            <div class="card">
+              <img src="assets/cards.jpg" width="100%" height="80%">
+              <h1>Ideal Weight</h1>
+            </div>
+          </a>
+          <a href="waterintake.html">
+            <div class="card">
+              <img src="assets/cards.jpg" width="100%" height="80%">
+              <h1>Water Intake</h1>
+            </div>
+          </a>
+          <a href="calorie.html">
+            <div class="card">
+              <img src="assets/cards.jpg" width="100%" height="80%">
+              <h1>Calorie</h1>
+            </div>
+          </a>
+        </div>
+      </section>
+      <footer>
+        <h1>MetricFit</h1>
+        <div>
+        <h2>Disclaimer: </h2>
+        <p>Results are estimates and should not replace professional medical advice.</p>
+      
+        </div>
+        <div>
+          <h2>Contact Us</h2>
+          <p>
+            <b>E-mail : </b><a href="mailto:hkharshit260503@gmail.com">hkharshit260503@gmail.com</a>
+          </p>
+          <p>
+            <b>Mob. No. : </b><a href="tel:+91 9012552147">+91 9012552147</a>
+          </p>
+        </div>
+        <p>Developed by: Harshit Kumar</p>
+      </footer>
+    <script>
+        function calculateTDEE() {
+            const age = parseFloat(document.getElementById('age').value);
+            const gender = document.getElementById('gender').value;
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const activity = parseFloat(document.getElementById('activity').value);
+
+            let bmr;
+            if (gender === 'male') {
+                bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+            } else {
+                bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+            }
+
+            const tdee = bmr * activity;
+            document.getElementById('result').textContent = `Your TDEE is approximately ${tdee.toFixed(2)} calories per day.`;
+        }
+    </script>
+</body>
+</html>
